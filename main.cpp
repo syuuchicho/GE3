@@ -8,8 +8,8 @@
 #include <DirectXTex.h>
 #include <d3dcompiler.h>
 #define DIRECTINPUT_VERSION     0x0800   // DirectInputのバージョン指定
-#include <dinput.h>
-#include <wrl.h>
+#include<wrl.h>
+#include"Input.h"
 
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
@@ -19,6 +19,8 @@
 
 using namespace DirectX;
 using namespace Microsoft::WRL;
+
+
 
 // 頂点データ構造体
 struct Vertex
@@ -214,6 +216,9 @@ LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
+
+    //ポインタ
+    Input* input;
 
 #pragma region WindowsAPI初期化処理
     // ウィンドウサイズ
@@ -465,25 +470,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     result = device->CreateFence(fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
     assert(SUCCEEDED(result));
 
+    //入力の初期化
+    input = new Input();
+    input->Initialize(w.hInstance, hwnd);
     // DirectX初期化処理　ここまで
 #pragma endregion
 
-    // DirectInputの初期化
-    ComPtr<IDirectInput8> directInput;
-    result = DirectInput8Create(
-        w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
-    assert(SUCCEEDED(result));
 
-    // キーボードデバイスの生成
-    ComPtr<IDirectInputDevice8> keyboard;
-    result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
-    // 入力データ形式のセット
-    result = keyboard->SetDataFormat(&c_dfDIKeyboard); // 標準形式
-    assert(SUCCEEDED(result));
-    // 排他制御レベルのセット
-    result = keyboard->SetCooperativeLevel(
-        hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
-    assert(SUCCEEDED(result));
 
 #pragma region 描画初期化処理
 
@@ -954,7 +947,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
     device->CreateShaderResourceView(texBuff2.Get(), &srvDesc, srvHandle);
 
     size_t textureIndex = 0;
-    BYTE key[256] = {};
 
     // ゲームループ
     while (true) {
@@ -969,10 +961,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
             break;
         }
 
-        // キーボード情報の取得開始
-        keyboard->Acquire();
-        // 全キーの入力状態を取得する
-        keyboard->GetDeviceState(sizeof(key), key);
+        input->Update();
 
         //// 数字の0キーが押されていたら
         //if (key[DIK_0]) 
@@ -1071,7 +1060,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
         // 定数バッファビュー(CBV)の設定コマンド
         commandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
         // SRVヒープの設定コマンド
-        ID3D12DescriptorHeap* descHeaps[] = {srvHeap.Get()};
+        ID3D12DescriptorHeap* descHeaps[] = { srvHeap.Get() };
         commandList->SetDescriptorHeaps(1, descHeaps);
         // SRVヒープの先頭ハンドルを取得（SRVを指しているはず）
         D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
@@ -1123,6 +1112,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
         // DirectX毎フレーム処理　ここまで
 
     }
+
+    delete input;
 
     // ウィンドウクラスを登録解除
     UnregisterClass(w.lpszClassName, w.hInstance);
