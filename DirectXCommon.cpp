@@ -1,8 +1,6 @@
 #include "DirectXCommon.h"
 #include <cassert>
 
-//04_05p13
-
 #pragma comment(lib, "d3d12.lib")
 #pragma comment(lib, "dxgi.lib")
 using namespace Microsoft::WRL;
