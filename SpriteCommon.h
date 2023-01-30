@@ -6,6 +6,11 @@
 //スプライト共通部
 class SpriteCommon
 {
+public:
+	const size_t texturewidth = 256;
+	const size_t textureheight = 256;
+	const size_t imageDataCount = texturewidth * textureheight;
+
 public:	//メンバ関数
 	//初期化
 	void Initialize(DirectXCommon* dxCommon);
@@ -24,5 +29,14 @@ private:	//メンバ変数
 
 	//ルートシグネチャー
 	Microsoft::WRL::ComPtr<ID3D12RootSignature>rootSignature;
+
+	//設定を元にSRV用デスクリプタヒープを生成
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvHeap ;
+	//テクスチャバッファ
+	Microsoft::WRL::ComPtr<ID3D12Resource> texBuff ;
+
+	//画像
+	DirectX::XMFLOAT4* imageData;
+
 };
 
