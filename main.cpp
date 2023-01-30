@@ -1,9 +1,14 @@
-﻿#include<d3dcompiler.h>
-#include"Input.h"
+﻿#include"Input.h"
 #include"Winapp.h"
 #include"DirectXCommon.h"
 #include"Sprite.h"
+#include <DirectXMath.h>
+
+#include<d3dcompiler.h>
 #pragma comment(lib,"d3dcompiler.lib")
+
+using namespace DirectX;
+
 
 
 // Windowsアプリでのエントリーポイント(main関数)
