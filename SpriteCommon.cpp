@@ -33,8 +33,8 @@ void SpriteCommon::Initialize(DirectXCommon* dxCommon)
 	D3D12_RESOURCE_DESC textrueResouceDesc{};
 	textrueResouceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	textrueResouceDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	textrueResouceDesc.Width = texturewidth;		//ïù
-	textrueResouceDesc.Height = textureheight;		//çÇÇ≥
+	textrueResouceDesc.Width = (UINT)texturewidth;		//ïù
+	textrueResouceDesc.Height = (UINT)textureheight;		//çÇÇ≥
 	textrueResouceDesc.DepthOrArraySize = 1;
 	textrueResouceDesc.MipLevels = 1;
 	textrueResouceDesc.SampleDesc.Count = 1;
