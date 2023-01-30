@@ -1,9 +1,5 @@
-cbuffer ConstBufferDataMaterial:register(b0)
+#include"Sprite.hlsli"
+float4 main(VSOutput input) : SV_TARGET
 {
-	float4 color;
-};
-
-float4 main() : SV_TARGET
-{
-	return color;
+	return float4(input.uv,0,1);
 }

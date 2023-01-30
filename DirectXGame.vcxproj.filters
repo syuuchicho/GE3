@@ -59,4 +59,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shaders\Sprite.hlsli">
+      <Filter>ヘッダー ファイル</Filter>
+    </None>
+  </ItemGroup>
 </Project>

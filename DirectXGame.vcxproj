@@ -118,6 +118,9 @@
     <ClInclude Include="SpriteCommon.h" />
     <ClInclude Include="WinApp.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shaders\Sprite.hlsli" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

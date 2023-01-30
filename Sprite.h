@@ -12,6 +12,12 @@ public:	//ƒƒ“ƒoŠÖ”
 		DirectX::XMFLOAT4 color; //F(RGBA)
 	};
 
+	struct Vertex
+	{
+		DirectX::XMFLOAT3 pos;
+		DirectX::XMFLOAT2 uv;
+	};
+
 	//‰Šú‰»
 	void Initialize(SpriteCommon* spriteCommon);
 
