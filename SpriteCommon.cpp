@@ -95,6 +95,7 @@ void SpriteCommon::Initialize(DirectXCommon* dxCommon)
 	//ブレンドステート
 	D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = pipelineDesc.BlendState.RenderTarget[0];
 	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;//RGBAすべてのチャンネルを描画
+	//共通
 	blenddesc.BlendEnable = true;
 	blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
 	blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;
