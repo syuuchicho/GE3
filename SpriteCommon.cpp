@@ -14,9 +14,9 @@ void SpriteCommon::Initialize(DirectXCommon* dxCommon)
 	this->dxCommon = dxCommon;
 
 	//シェーダー
-	ComPtr<ID3DBlob> vsBlob = nullptr;
-	ComPtr<ID3DBlob> psBlob = nullptr;
-	ComPtr<ID3DBlob> errorBlob = nullptr;
+	ID3DBlob* vsBlob = nullptr;
+	ID3DBlob* psBlob = nullptr;
+	ID3DBlob* errorBlob = nullptr;
 
 	//頂点シェーダーの読み込みとコンパイル
 	result = D3DCompileFromFile(
