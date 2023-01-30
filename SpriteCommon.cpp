@@ -152,7 +152,7 @@ void SpriteCommon::Initialize(DirectXCommon* dxCommon)
 void SpriteCommon::PreDraw()
 {
 	//プリミティブ形状の設定コマンド
-	dxCommon->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	dxCommon->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	//パイプラインステートとルートシグネチャの設定コマンド
 	dxCommon->GetCommandList()->SetPipelineState(pipelineState.Get());
