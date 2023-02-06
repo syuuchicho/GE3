@@ -35,8 +35,6 @@ private:	//メンバ変数
 	//テクスチャバッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource> texBuff ;
 
-	//画像
-	DirectX::XMFLOAT4* imageData;
 
 };
 
