@@ -116,18 +116,63 @@ void Sprite::Initialize(SpriteCommon* spriteCommon)
 
 		result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);
 		assert(SUCCEEDED(result));
-		constMapTransform->mat = XMMatrixIdentity();
-		constMapTransform->mat.r[0].m128_f32[0] = 2.0f / window_width;
-		constMapTransform->mat.r[1].m128_f32[1] = -2.0f / window_height;
 
-		constMapTransform->mat.r[3].m128_f32[0] = -1.0f;
-		constMapTransform->mat.r[3].m128_f32[1] = 1.0f;
+		//ƒ[ƒ‹ƒh
+		XMMATRIX matWorld;
+		matWorld = XMMatrixIdentity();
+
+		rotationZ = 0;
+		position = { 0.f,0.f,0.f };
+
+		//‰ñ“]
+		XMMATRIX matRot;	//‰ñ“]s—ñ
+		matRot = XMMatrixIdentity();
+		matRot *= XMMatrixRotationZ(XMConvertToRadians(rotationZ));	
+		
+		matWorld *= matRot;	//ƒ[ƒ‹ƒhs—ñ‚É‰ñ“]‚ð”½‰f
+
+		XMMATRIX matTrans;	//•½sˆÚ“®s—ñ
+		matTrans = XMMatrixTranslation(position.x, position.y, position.z);	//(-50,0,0)•½sˆÚ“®
+		matWorld *= matTrans;	//ƒ[ƒ‹ƒhs—ñ‚É•½sˆÚ“®‚ð”½‰f
+
+			//ŽË‰e•ÏŠ·(“§Ž‹“Š‰e)s—ñ‚ÌŒvŽZ
+		XMMATRIX matProjection = XMMatrixOrthographicOffCenterLH(
+			0.f, WinApp::window_width,
+			WinApp::window_height, 0.f,
+			0.0f, 0.1f
+		);
+
+		constMapTransform->mat = matWorld * matProjection;
+
 
 	}
 }
 
 void Sprite::Update()
 {
+	//ƒ[ƒ‹ƒh
+	XMMATRIX matWorld;
+	matWorld = XMMatrixIdentity();
+
+	//‰ñ“]
+	XMMATRIX matRot;	//‰ñ“]s—ñ
+	matRot = XMMatrixIdentity();
+	matRot *= XMMatrixRotationZ(XMConvertToRadians(rotationZ));
+
+	matWorld *= matRot;	//ƒ[ƒ‹ƒhs—ñ‚É‰ñ“]‚ð”½‰f
+
+	XMMATRIX matTrans;	//•½sˆÚ“®s—ñ
+	matTrans = XMMatrixTranslation(position.x, position.y, position.z);	//(-50,0,0)•½sˆÚ“®
+	matWorld *= matTrans;	//ƒ[ƒ‹ƒhs—ñ‚É•½sˆÚ“®‚ð”½‰f
+
+		//ŽË‰e•ÏŠ·(“§Ž‹“Š‰e)s—ñ‚ÌŒvŽZ
+	XMMATRIX matProjection = XMMatrixOrthographicOffCenterLH(
+		0.f, WinApp::window_width,
+		WinApp::window_height, 0.f,
+		0.0f, 0.1f
+	);
+
+	constMapTransform->mat = matWorld * matProjection;
 }
 
 

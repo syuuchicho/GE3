@@ -35,9 +35,11 @@ public:	//メンバ関数
 	//描画
 	void Draw();
 private:	//メンバ変数
-	//スプライト情報
-	DirectX::XMFLOAT4 color = { 1,0,0,0.5f };
 
+	//スプライト情報
+	DirectX::XMFLOAT4 color = { 1,1,1,0.5f };
+	float rotationZ;
+	DirectX::XMFLOAT3 position;
 
 	SpriteCommon* spriteCommon = nullptr;
 
