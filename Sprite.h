@@ -5,11 +5,18 @@
 //スプライト
 class Sprite
 {
-public:	//メンバ関数
+private:
+	const int window_width = 1280;
+	const int window_height = 720;
 
 	//定数バッファ用データ構造体(マテリアル)
 	struct ConstBufferDataMaterial {
 		DirectX::XMFLOAT4 color; //色(RGBA)
+	};
+
+	struct ConstBufferDataTransform
+	{
+		DirectX::XMMATRIX mat;//3D行列
 	};
 
 	struct Vertex
@@ -17,6 +24,7 @@ public:	//メンバ関数
 		DirectX::XMFLOAT3 pos;
 		DirectX::XMFLOAT2 uv;
 	};
+public:	//メンバ関数
 
 	//初期化
 	void Initialize(SpriteCommon* spriteCommon);
@@ -39,6 +47,9 @@ private:	//メンバ変数
 	//定数バッファ
 	Microsoft::WRL::ComPtr<ID3D12Resource>constBuffMaterial = nullptr;
 	ConstBufferDataMaterial* constMapMaterial = nullptr;
+
+	Microsoft::WRL::ComPtr<ID3D12Resource>constBuffTransform = nullptr;
+	ConstBufferDataTransform* constMapTransform = nullptr;
 
 };
 
